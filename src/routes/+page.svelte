@@ -5,16 +5,6 @@
 	import { Sheet, Sequence, Project, Studio } from '@threlte/theatre';
 	import state from './state.json';
 	import { dev } from '$app/environment';
-	import { onMount } from 'svelte';
-
-	onMount(() => {
-		window.addEventListener('keydown', (e) => {
-			if (e.key === ' ') {
-				e.preventDefault();
-				window.location.reload();
-			}
-		});
-	});
 </script>
 
 <div class="absolute inset-0 h-full w-full">
@@ -22,7 +12,13 @@
 		<Project config={{ state }} name="Project A">
 			<Studio enabled={false} />
 			<Sheet>
-				<Sequence autoplay delay={1000}>
+				<Sequence
+					autoplay
+					delay={1000}
+					iterationCount={Infinity}
+					range={[0, 6]}
+					direction="alternate"
+				>
 					<Scene />
 				</Sequence>
 			</Sheet>

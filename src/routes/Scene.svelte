@@ -6,14 +6,15 @@
 	import { Edges, Grid, OrbitControls, Outlines } from '@threlte/extras';
 	import { Vector3 } from 'three';
 	import { SheetObject } from '@threlte/theatre';
+	import { base } from '$app/paths';
 
-	const bin = useLoader(STLLoader).load('/showcase.stl');
+	const bin = useLoader(STLLoader).load(base + '/showcase.stl');
 
-	const lid = useLoader(STLLoader).load('/showcase-two-switches.stl');
+	const lid = useLoader(STLLoader).load(base + '/showcase-two-switches.stl');
 
-	const cap = useLoader(STLLoader).load('/showcase-cap.stl');
+	const cap = useLoader(STLLoader).load(base + '/showcase-cap.stl');
 
-	const mxSwitch = useLoader(STLLoader).load('/showcase-mx-switch.stl');
+	const mxSwitch = useLoader(STLLoader).load(base + '/showcase-mx-switch.stl');
 </script>
 
 <T.Group position.y={-2}>
