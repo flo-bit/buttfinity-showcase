@@ -1,20 +1,14 @@
 <script>
 	import { T } from '@threlte/core';
 
-	import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js';
-	import { useLoader } from '@threlte/core';
-	import { Edges, Grid, OrbitControls, Outlines } from '@threlte/extras';
+	import {  Grid } from '@threlte/extras';
 	import { Vector3 } from 'three';
 	import { SheetObject } from '@threlte/theatre';
-	import { base } from '$app/paths';
 	import RotatableObject from './RotatableObject.svelte';
 	import BaseBin from '../lib/models/base-bin.svelte';
-
-	const lid = useLoader(STLLoader).load(base + '/two-switches-lid.stl');
-
-	const cap = useLoader(STLLoader).load(base + '/switch-cap-15x33.stl');
-
-	const mxSwitch = useLoader(STLLoader).load(base + '/cherry-mx.stl');
+	import CherryMx from '$lib/models/cherry-mx.svelte';
+	import Lid2MxSwitches from '$lib/models/lid-2-mx-switches.svelte';
+	import CapMxSwitch15x33 from '$lib/models/cap-mx-switch-15x33.svelte';
 </script>
 
 
@@ -42,14 +36,7 @@
 		<SheetObject key="Lid">
 			{#snippet children({ Transform })}
 				<Transform>
-					{#if $lid}
-						<T.Mesh scale={0.1} rotation.x={-Math.PI / 2}>
-							<T is={$lid} />
-							<Edges color="white" thresholdAngle={30} scale={1.001} />
-							<T.MeshToonMaterial color="#313131" />
-							<Outlines color="white" width={2} angle={1} />
-						</T.Mesh>
-					{/if}
+					<Lid2MxSwitches />
 				</Transform>
 			{/snippet}
 		</SheetObject>
@@ -57,14 +44,7 @@
 		<SheetObject key="MXSwitch1">
 			{#snippet children({ Transform })}
 				<Transform>
-					{#if $mxSwitch}
-						<T.Mesh scale={0.1} rotation.x={-Math.PI / 2}>
-							<T is={$mxSwitch} />
-							<Edges color="white" thresholdAngle={4} scale={1.001} />
-							<T.MeshBasicMaterial color="#000" />
-							<Outlines color="white" width={2} angle={1} />
-						</T.Mesh>
-					{/if}
+					<CherryMx />
 				</Transform>
 			{/snippet}
 		</SheetObject>
@@ -72,13 +52,7 @@
 		<SheetObject key="Cap1">
 			{#snippet children({ Transform })}
 				<Transform>
-					{#if $cap}
-						<T.Mesh scale={0.1} rotation.x={-Math.PI / 2}>
-							<T is={$cap} />
-							<T.MeshToonMaterial color="#550000" />
-							<Outlines color="#ff2222" width={2} angle={1} />
-						</T.Mesh>
-					{/if}
+					<CapMxSwitch15x33 />
 				</Transform>
 			{/snippet}
 		</SheetObject>
@@ -86,14 +60,7 @@
 		<SheetObject key="MXSwitch2">
 			{#snippet children({ Transform })}
 				<Transform>
-					{#if $mxSwitch}
-						<T.Mesh scale={0.1} rotation.x={-Math.PI / 2}>
-							<T is={$mxSwitch} />
-							<Edges color="white" thresholdAngle={4} scale={1.001} />
-							<T.MeshBasicMaterial color="#000" />
-							<Outlines color="white" width={2} angle={1} />
-						</T.Mesh>
-					{/if}
+					<CherryMx />
 				</Transform>
 			{/snippet}
 		</SheetObject>
@@ -101,13 +68,7 @@
 		<SheetObject key="Cap2">
 			{#snippet children({ Transform })}
 				<Transform>
-					{#if $cap}
-						<T.Mesh scale={0.1} rotation.x={-Math.PI / 2}>
-							<T is={$cap} />
-							<T.MeshToonMaterial color="#550000" />
-							<Outlines color="#ff2222" width={2} angle={1} />
-						</T.Mesh>
-					{/if}
+					<CapMxSwitch15x33 />
 				</Transform>
 			{/snippet}
 		</SheetObject>

@@ -8,7 +8,7 @@ Command: npx @threlte/gltf@3.0.1 cherry-mx.glb -t -u -T --draco draco
 
 	import type { Snippet } from 'svelte';
 	import { T, type Props } from '@threlte/core';
-	import { useGltf, useSuspense, useDraco } from '@threlte/extras';
+	import { useGltf, useSuspense, useDraco, Edges, Outlines } from '@threlte/extras';
 	import { base } from '$app/paths';
 
 	let {
@@ -44,10 +44,13 @@ Command: npx @threlte/gltf@3.0.1 cherry-mx.glb -t -u -T --draco draco
 	{#await gltf}
 		{@render fallback?.()}
 	{:then gltf}
-		<T.Mesh
-			geometry={gltf.nodes['cherry-mx'].geometry}
-			material={gltf.nodes['cherry-mx'].material}
-		/>
+
+		<T.Mesh scale={0.1}>
+			<T is={gltf.nodes['cherry-mx'].geometry} />
+      <Edges color="white" thresholdAngle={4} scale={1.001} />
+      <T.MeshBasicMaterial color="#000" />
+      <Outlines color="white" width={2} angle={1} />
+		</T.Mesh>
 	{:catch err}
 		{@render error?.({ error: err })}
 	{/await}
