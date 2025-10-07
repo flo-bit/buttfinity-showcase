@@ -8,7 +8,7 @@ Command: npx @threlte/gltf@3.0.1 cap-slider.glb -t -u -T --draco draco
 
 	import type { Snippet } from 'svelte';
 	import { T, type Props } from '@threlte/core';
-	import { useGltf, useSuspense, useDraco } from '@threlte/extras';
+	import { useGltf, useSuspense, useDraco, Outlines } from '@threlte/extras';
 	import { base } from '$app/paths';
 
 	let {
@@ -44,10 +44,11 @@ Command: npx @threlte/gltf@3.0.1 cap-slider.glb -t -u -T --draco draco
 	{#await gltf}
 		{@render fallback?.()}
 	{:then gltf}
-		<T.Mesh
-			geometry={gltf.nodes['slider-cap'].geometry}
-			material={gltf.nodes['slider-cap'].material}
-		/>
+		<T.Mesh scale={0.1}>
+			<T is={gltf.nodes['slider-cap'].geometry} />
+			<T.MeshToonMaterial color="#550000" />
+			<Outlines color="#ff2222" width={2} angle={1} />
+		</T.Mesh>
 	{:catch err}
 		{@render error?.({ error: err })}
 	{/await}

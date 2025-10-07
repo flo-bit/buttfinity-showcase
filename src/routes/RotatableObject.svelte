@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { T, useTask, useThrelte } from '@threlte/core';
-	import { interactivity, useCursor } from '@threlte/extras';
+	import { useCursor } from '@threlte/extras';
 	import { Quaternion, Euler, Vector2, Group } from 'three';
 	import { onMount } from 'svelte';
-	import { spring } from './Utils';
+	import { spring } from '$lib/Utils';
 
 	const { onPointerEnter, onPointerLeave } = useCursor();
-	interactivity();
 
 	let size = 1.5;
 	let sizeSpring = spring<number>(size, 0.1, 0.5);
@@ -149,7 +148,7 @@
 			onPointerUp();
 		}}
 	>
-		<T.BoxGeometry args={[4, 4, 4]} />
+		<T.BoxGeometry args={[7, 4, 11]} />
 		<T.MeshBasicMaterial />
 	</T.Mesh>
 

@@ -47,7 +47,7 @@ Command: npx @threlte/gltf@3.0.1 base-bin.gltf -t -u -T --draco draco1234
 		<T.Mesh scale={0.1} rotation.x={-Math.PI / 2}>
 			<T is={gltf.nodes.OpenSCAD_Model.geometry} />
 			<Edges color="white" thresholdAngle={30} scale={1.001} />
-			<T.MeshToonMaterial color="#282828" />
+			<T.MeshToonMaterial color="#18181b" />
 			<Outlines color="white" width={2} angle={0.1} />
 		</T.Mesh>
 	{:catch err}

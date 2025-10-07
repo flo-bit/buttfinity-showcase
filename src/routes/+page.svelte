@@ -51,7 +51,7 @@
 <div class="absolute inset-0 h-full w-full">
 	<Canvas>
 		<Project config={{ state }} name="Plate A">
-			<Studio enabled={true} />
+			<Studio enabled={false} />
 			<Sheet>
 				<Sequence
 					autoplay

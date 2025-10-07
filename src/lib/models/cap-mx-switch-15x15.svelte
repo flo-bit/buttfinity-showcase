@@ -7,9 +7,12 @@ Command: npx @threlte/gltf@3.0.1 cap-mx-switch-15x15.glb -t -u -T --draco draco
 	import type * as THREE from 'three';
 
 	import type { Snippet } from 'svelte';
-	import { T, type Props } from '@threlte/core';
-	import { useGltf, useSuspense, useDraco } from '@threlte/extras';
+	import { T, useTask, type Props } from '@threlte/core';
+	import { useGltf, useSuspense, useDraco, Outlines, useCursor } from '@threlte/extras';
 	import { base } from '$app/paths';
+	import { spring } from '$lib/Utils';
+
+	const { onPointerEnter, onPointerLeave } = useCursor();
 
 	let {
 		fallback,
@@ -38,6 +41,28 @@ Command: npx @threlte/gltf@3.0.1 cap-mx-switch-15x15.glb -t -u -T --draco draco
 			dracoLoader: useDraco(base + '/draco/')
 		})
 	);
+
+	let movementSpring = spring<number>(0, 0.2, 0.8);
+	let movement = $state(0);
+
+	useTask((delta) => {
+		movement = movementSpring.update(delta);
+	});
+
+	function onPointerDown(evt: any) {
+		console.log('onPointerDown');
+
+		movementSpring.set(-0.2);
+		setTimeout(() => {
+			movementSpring.set(0);
+		}, 200);
+	}
+
+	function onPointerUp() {
+		console.log('onPointerUp');
+
+		movementSpring.set(0);
+	}
 </script>
 
 <T.Group bind:ref dispose={false} {...props}>
@@ -45,9 +70,28 @@ Command: npx @threlte/gltf@3.0.1 cap-mx-switch-15x15.glb -t -u -T --draco draco
 		{@render fallback?.()}
 	{:then gltf}
 		<T.Mesh
-			geometry={gltf.nodes['cap-mx-switch-15x15'].geometry}
-			material={gltf.nodes['cap-mx-switch-15x15'].material}
-		/>
+			scale={0.1}
+			position.y={movement}
+			onpointerdown={(evt: any) => {
+				onPointerDown(evt.nativeEvent);
+			}}
+			onpointerleave={() => {
+				onPointerLeave();
+			}}
+			onpointerenter={() => {
+				onPointerEnter();
+			}}
+			ontouchstart={(evt: any) => {
+				onPointerDown(evt.nativeEvent);
+			}}
+			ontouchend={() => {
+				onPointerUp();
+			}}
+		>
+			<T is={gltf.nodes['cap-mx-switch-15x15'].geometry} />
+			<T.MeshToonMaterial color="#550000" />
+			<Outlines color="#ff2222" width={2} angle={1} />
+		</T.Mesh>
 	{:catch err}
 		{@render error?.({ error: err })}
 	{/await}
