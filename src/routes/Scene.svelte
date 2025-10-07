@@ -7,118 +7,119 @@
 	import { Vector3 } from 'three';
 	import { SheetObject } from '@threlte/theatre';
 	import { base } from '$app/paths';
+	import RotatableObject from './RotatableObject.svelte';
+	import BaseBin from '../lib/models/base-bin.svelte';
 
-	const bin = useLoader(STLLoader).load(base + '/showcase.stl');
+	const lid = useLoader(STLLoader).load(base + '/two-switches-lid.stl');
 
-	const lid = useLoader(STLLoader).load(base + '/showcase-two-switches.stl');
+	const cap = useLoader(STLLoader).load(base + '/switch-cap-15x33.stl');
 
-	const cap = useLoader(STLLoader).load(base + '/showcase-cap.stl');
-
-	const mxSwitch = useLoader(STLLoader).load(base + '/showcase-mx-switch.stl');
+	const mxSwitch = useLoader(STLLoader).load(base + '/cherry-mx.stl');
 </script>
 
+
+<T.PerspectiveCamera makeDefault position={[10, 10, 10]} near={0.1} far={100}   oncreate={(ref) => {
+    ref.lookAt(0, 1, 0)
+  }}>
+    <!-- <OrbitControls  /> -->
+</T.PerspectiveCamera>
+
+<RotatableObject>
 <T.Group position.y={-2}>
-	<T.PerspectiveCamera makeDefault position={[10, 10, 10]} near={0.1} far={100}>
-		<OrbitControls autoRotate autoRotateSpeed={1} />
-	</T.PerspectiveCamera>
 
 	<T.AmbientLight intensity={0.2} />
 
 	<T.DirectionalLight intensity={1} position={[10, 10, -10]} />
 
-	<SheetObject key="Box">
-		{#snippet children({ Transform })}
-			<Transform>
-				{#if $bin}
-					<T.Mesh scale={0.1} rotation.x={-Math.PI / 2}>
-						<T is={$bin} />
-						<Edges color="white" thresholdAngle={3} scale={1.001} />
-						<T.MeshBasicMaterial color="#000" />
-						<Outlines color="white" width={2} angle={0.1} />
-					</T.Mesh>
-				{/if}
-			</Transform>
-		{/snippet}
-	</SheetObject>
+		<SheetObject key="Box">
+			{#snippet children({ Transform })}
+				<Transform>
+                    <BaseBin />
+				</Transform>
+			{/snippet}
+		</SheetObject>
 
-	<SheetObject key="Lid">
-		{#snippet children({ Transform })}
-			<Transform>
-				{#if $lid}
-					<T.Mesh scale={0.1} rotation.x={-Math.PI / 2}>
-						<T is={$lid} />
-						<Edges color="white" thresholdAngle={4} scale={1.001} />
-						<T.MeshBasicMaterial color="#000" />
-						<Outlines color="white" width={2} angle={1} />
-					</T.Mesh>
-				{/if}
-			</Transform>
-		{/snippet}
-	</SheetObject>
+		<SheetObject key="Lid">
+			{#snippet children({ Transform })}
+				<Transform>
+					{#if $lid}
+						<T.Mesh scale={0.1} rotation.x={-Math.PI / 2}>
+							<T is={$lid} />
+							<Edges color="white" thresholdAngle={30} scale={1.001} />
+							<T.MeshToonMaterial color="#313131" />
+							<Outlines color="white" width={2} angle={1} />
+						</T.Mesh>
+					{/if}
+				</Transform>
+			{/snippet}
+		</SheetObject>
 
-	<SheetObject key="MXSwitch1">
-		{#snippet children({ Transform })}
-			<Transform>
-				{#if $mxSwitch}
-					<T.Mesh scale={0.1} rotation.x={-Math.PI / 2}>
-						<T is={$mxSwitch} />
-						<Edges color="white" thresholdAngle={4} scale={1.001} />
-						<T.MeshBasicMaterial color="#000" />
-						<Outlines color="white" width={2} angle={1} />
-					</T.Mesh>
-				{/if}
-			</Transform>
-		{/snippet}
-	</SheetObject>
+		<SheetObject key="MXSwitch1">
+			{#snippet children({ Transform })}
+				<Transform>
+					{#if $mxSwitch}
+						<T.Mesh scale={0.1} rotation.x={-Math.PI / 2}>
+							<T is={$mxSwitch} />
+							<Edges color="white" thresholdAngle={4} scale={1.001} />
+							<T.MeshBasicMaterial color="#000" />
+							<Outlines color="white" width={2} angle={1} />
+						</T.Mesh>
+					{/if}
+				</Transform>
+			{/snippet}
+		</SheetObject>
 
-	<SheetObject key="Cap1">
-		{#snippet children({ Transform })}
-			<Transform>
-				{#if $cap}
-					<T.Mesh scale={0.1} rotation.x={-Math.PI / 2}>
-						<T is={$cap} />
-						<T.MeshToonMaterial color="#550000" />
-						<Outlines color="#ff2222" width={2} angle={1} />
-					</T.Mesh>
-				{/if}
-			</Transform>
-		{/snippet}
-	</SheetObject>
+		<SheetObject key="Cap1">
+			{#snippet children({ Transform })}
+				<Transform>
+					{#if $cap}
+						<T.Mesh scale={0.1} rotation.x={-Math.PI / 2}>
+							<T is={$cap} />
+							<T.MeshToonMaterial color="#550000" />
+							<Outlines color="#ff2222" width={2} angle={1} />
+						</T.Mesh>
+					{/if}
+				</Transform>
+			{/snippet}
+		</SheetObject>
 
-	<SheetObject key="MXSwitch2">
-		{#snippet children({ Transform })}
-			<Transform>
-				{#if $mxSwitch}
-					<T.Mesh scale={0.1} rotation.x={-Math.PI / 2}>
-						<T is={$mxSwitch} />
-						<Edges color="white" thresholdAngle={4} scale={1.001} />
-						<T.MeshBasicMaterial color="#000" />
-						<Outlines color="white" width={2} angle={1} />
-					</T.Mesh>
-				{/if}
-			</Transform>
-		{/snippet}
-	</SheetObject>
+		<SheetObject key="MXSwitch2">
+			{#snippet children({ Transform })}
+				<Transform>
+					{#if $mxSwitch}
+						<T.Mesh scale={0.1} rotation.x={-Math.PI / 2}>
+							<T is={$mxSwitch} />
+							<Edges color="white" thresholdAngle={4} scale={1.001} />
+							<T.MeshBasicMaterial color="#000" />
+							<Outlines color="white" width={2} angle={1} />
+						</T.Mesh>
+					{/if}
+				</Transform>
+			{/snippet}
+		</SheetObject>
 
-	<SheetObject key="Cap2">
-		{#snippet children({ Transform })}
-			<Transform>
-				{#if $cap}
-					<T.Mesh scale={0.1} rotation.x={-Math.PI / 2}>
-						<T is={$cap} />
-						<T.MeshToonMaterial color="#550000" />
-						<Outlines color="#ff2222" width={2} angle={1} />
-					</T.Mesh>
-				{/if}
-			</Transform>
-		{/snippet}
-	</SheetObject>
+		<SheetObject key="Cap2">
+			{#snippet children({ Transform })}
+				<Transform>
+					{#if $cap}
+						<T.Mesh scale={0.1} rotation.x={-Math.PI / 2}>
+							<T is={$cap} />
+							<T.MeshToonMaterial color="#550000" />
+							<Outlines color="#ff2222" width={2} angle={1} />
+						</T.Mesh>
+					{/if}
+				</Transform>
+			{/snippet}
+		</SheetObject>
 
-	<Grid
-		cellSize={2.1}
-		cellColor="white"
-		sectionThickness={0}
-		fadeDistance={10}
-		fadeOrigin={new Vector3()}
-	/>
+		<Grid
+			cellSize={2.1}
+			cellColor="white"
+			sectionThickness={0}
+			fadeDistance={10}
+			fadeOrigin={new Vector3(0, 0, 0)}
+		/>
 </T.Group>
+
+
+</RotatableObject>
