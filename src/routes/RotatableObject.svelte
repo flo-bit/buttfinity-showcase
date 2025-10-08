@@ -10,7 +10,6 @@
 	let size = 1.5;
 	let sizeSpring = spring<number>(size, 0.1, 0.5);
 
-	let distance = 4;
 	const maxSpeed = 0.03;
 	const acceleration = 0.0002;
 	const damping = 0.98;
@@ -98,31 +97,19 @@
 
 	const { renderer } = useThrelte();
 
-	function onResize() {
-		if (window.innerWidth < 750) {
-			distance = 8;
-		} else {
-			distance = 5;
-		}
-	}
-
 	onMount(() => {
 		const canvas = renderer.domElement;
-
-		onResize();
 
 		canvas.addEventListener('pointermove', onPointerMove, { passive: false });
 		canvas.addEventListener('pointerup', onPointerUp, false);
 		canvas.addEventListener('touchmove', onPointerMove, { passive: false });
 		canvas.addEventListener('touchend', onPointerUp, false);
-		window.addEventListener('resize', onResize);
 
 		return () => {
 			canvas.removeEventListener('pointermove', onPointerMove, false);
 			canvas.removeEventListener('pointerup', onPointerUp, false);
 			canvas.removeEventListener('touchmove', onPointerMove, false);
 			canvas.removeEventListener('touchend', onPointerUp, false);
-			window.removeEventListener('resize', onResize);
 		};
 	});
 </script>
@@ -147,8 +134,9 @@
 		ontouchend={() => {
 			onPointerUp();
 		}}
+		position.y={0.75}
 	>
-		<T.BoxGeometry args={[7, 4, 11]} />
+		<T.BoxGeometry args={[4.2, 1.5, 6.3]} />
 		<T.MeshBasicMaterial />
 	</T.Mesh>
 

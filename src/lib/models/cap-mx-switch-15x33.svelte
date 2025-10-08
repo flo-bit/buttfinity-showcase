@@ -50,6 +50,7 @@ Command: npx @threlte/gltf@3.0.1 cap-mx-switch-15x33.glb -t -u -T --draco draco
 	});
 
 	function onPointerDown(evt: any) {
+    evt.stopPropagation();
 		console.log('onPointerDown');
 
 		movementSpring.set(-0.2);
@@ -58,7 +59,8 @@ Command: npx @threlte/gltf@3.0.1 cap-mx-switch-15x33.glb -t -u -T --draco draco
 		}, 200);
 	}
 
-	function onPointerUp() {
+	function onPointerUp(evt: any) {
+    evt.stopPropagation();
 		console.log('onPointerUp');
 
 		movementSpring.set(0);
@@ -73,7 +75,7 @@ Command: npx @threlte/gltf@3.0.1 cap-mx-switch-15x33.glb -t -u -T --draco draco
 			scale={0.1}
 			position.y={movement}
 			onpointerdown={(evt: any) => {
-				onPointerDown(evt.nativeEvent);
+				onPointerDown(evt);
 			}}
 			onpointerleave={() => {
 				// sizeSpring.set(1.5);
@@ -84,10 +86,10 @@ Command: npx @threlte/gltf@3.0.1 cap-mx-switch-15x33.glb -t -u -T --draco draco
 				onPointerEnter();
 			}}
 			ontouchstart={(evt: any) => {
-				onPointerDown(evt.nativeEvent);
+				onPointerDown(evt);
 			}}
-			ontouchend={() => {
-				onPointerUp();
+			ontouchend={(evt: any) => {
+				onPointerUp(evt);
 			}}
 		>
 			<T is={gltf.nodes['switch-cap-15x33'].geometry} />

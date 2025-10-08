@@ -19,19 +19,47 @@
 	import CapMxSwitch15x15 from '$lib/models/cap-mx-switch-15x15.svelte';
 	import CapSlider from '$lib/models/cap-slider.svelte';
 	import CapRotaryEncoder from '$lib/models/cap-rotary-encoder.svelte';
+	import { onMount } from 'svelte';
 	interactivity();
+
+
+	let distance = $state(1);
+	let down = $state(-2)
+
+	function onResize() {
+		if (window.innerWidth < 750) {
+			distance = 2;
+			down = -5;
+		} else {
+			distance = 1;
+			down = -2;
+		}
+	}
+
+
+	onMount(() => {
+
+		onResize();
+
+		window.addEventListener('resize', onResize);
+
+		return () => {
+			window.removeEventListener('resize', onResize);
+		};
+	});
 </script>
 
 
-<T.PerspectiveCamera makeDefault position={[10, 10, 10]} near={0.1} far={100}   oncreate={(ref) => {
+<T.PerspectiveCamera makeDefault position={[10 * distance, 5 * distance, 10 * distance]} near={0.1} far={100}   oncreate={(ref) => {
     ref.lookAt(0, 1, 0)
   }}>
     <!-- <OrbitControls  /> -->
 </T.PerspectiveCamera>
 
+<T.Group position.y={down}>
 <RotatableObject>
 
-<T.Group position.y={-2} scale={0.6}>
+<T.Group scale={0.5}>
 
 
 	<SheetObject key="Baseplate">
@@ -226,3 +254,4 @@
 
 
 </RotatableObject>
+</T.Group>
