@@ -47,7 +47,7 @@ Command: npx @threlte/gltf@3.0.1 baseplate.glb -t -u -T --draco draco
 		<T.Mesh scale={0.1}>
 			<T is={gltf.nodes['baseplate-3x2'].geometry} />
 			<Edges color="white" thresholdAngle={30} scale={1.001} />
-			<T.MeshToonMaterial color="#18181b" />
+			<T.MeshToonMaterial color="#27272a" />
 			<Outlines color="white" width={2} angle={0.1} />
 		</T.Mesh>
 	{:catch err}

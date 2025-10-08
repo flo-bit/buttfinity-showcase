@@ -21,6 +21,8 @@ Command: npx @threlte/gltf@3.0.1 cap-rotary-encoder.glb -t -u -T --draco draco
 		children,
 		ref = $bindable(),
 		interactive = $bindable(true),
+    color = '#4c0519',
+    accentColor = '#f43f5e',
 		...props
 	}: Props<THREE.Group> & {
 		ref?: THREE.Group;
@@ -28,6 +30,8 @@ Command: npx @threlte/gltf@3.0.1 cap-rotary-encoder.glb -t -u -T --draco draco
 		fallback?: Snippet;
 		error?: Snippet<[{ error: Error }]>;
 		interactive?: boolean;
+    color?: string;
+    accentColor?: string;
 	} = $props();
 
 	const suspend = useSuspense();
@@ -175,8 +179,8 @@ Command: npx @threlte/gltf@3.0.1 cap-rotary-encoder.glb -t -u -T --draco draco
       onPointerUp(evt);
     }}>
 			<T is={gltf.nodes['rotary-encoder-cap'].geometry} />
-			<T.MeshToonMaterial color="#550000" />
-			<Outlines color="#ff2222" width={2} angle={1} />
+			<T.MeshToonMaterial color={color} />
+			<Outlines color="white" width={2} angle={1} />
 			<!-- <Edges color="white" thresholdAngle={11} scale={1.001} /> -->
 		</T.Mesh>
 
@@ -184,7 +188,7 @@ Command: npx @threlte/gltf@3.0.1 cap-rotary-encoder.glb -t -u -T --draco draco
 			<T.Group rotation.y={i * ((2 * Math.PI) / 18)} position.y={1.4}>
 				<T.Mesh scale={1} position.x={0.65}>
 					<T.BoxGeometry args={[0.1, 0.5, 0.02]} />
-					<T.MeshToonMaterial color="#f43f5e" />
+					<T.MeshToonMaterial color={accentColor} />
 				</T.Mesh>
 			</T.Group>
 		{/each}

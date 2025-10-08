@@ -30,7 +30,7 @@
 	let side = $state(0);
 
 	function onResize() {
-		if (window.innerWidth < 750) {
+		if (window.innerWidth < 1000) {
 			distance = 2;
 			down = -8;
 			side = 0;
@@ -40,7 +40,7 @@
 			down = -3;
 			side = -2;
 		}
-		scene.fog = new Fog(0x000000, 25 * distance, 30 * distance);
+		scene.fog = new Fog(0x000000, 20 * distance, 26 * distance);
 	}
 
 	const { scene } = useThrelte();
@@ -50,7 +50,7 @@
 
 		window.addEventListener('resize', onResize);
 
-		scene.fog = new Fog(0x000000, 25 * distance, 30 * distance);
+		scene.fog = new Fog(0x000000, 20 * distance, 26 * distance);
 
 		return () => {
 			window.removeEventListener('resize', onResize);
@@ -170,7 +170,7 @@
 						<SheetObject key="CapMxSwitch15x33">
 							{#snippet children({ Transform })}
 								<Transform>
-									<CapMxSwitch15x33 />
+									<CapMxSwitch15x33 color="#b91c1c" />
 								</Transform>
 							{/snippet}
 						</SheetObject>
@@ -178,7 +178,7 @@
 						<SheetObject key="CapMxSwitch15x33-2">
 							{#snippet children({ Transform })}
 								<Transform>
-									<CapMxSwitch15x33 />
+									<CapMxSwitch15x33 color="#b45309" />
 								</Transform>
 							{/snippet}
 						</SheetObject>
@@ -186,7 +186,7 @@
 						<SheetObject key="CapMxSwitch15x15-1">
 							{#snippet children({ Transform })}
 								<Transform>
-									<CapMxSwitch15x15 />
+									<CapMxSwitch15x15 color="#be123c" />
 								</Transform>
 							{/snippet}
 						</SheetObject>
@@ -194,7 +194,7 @@
 						<SheetObject key="CapMxSwitch15x15-2">
 							{#snippet children({ Transform })}
 								<Transform>
-									<CapMxSwitch15x15 />
+									<CapMxSwitch15x15 color="#be185d" />
 								</Transform>
 							{/snippet}
 						</SheetObject>
@@ -202,7 +202,7 @@
 						<SheetObject key="CapMxSwitch15x15-3">
 							{#snippet children({ Transform })}
 								<Transform>
-									<CapMxSwitch15x15 />
+									<CapMxSwitch15x15 color="#a21caf" />
 								</Transform>
 							{/snippet}
 						</SheetObject>
@@ -210,7 +210,7 @@
 						<SheetObject key="CapMxSwitch15x15-4">
 							{#snippet children({ Transform })}
 								<Transform>
-									<CapMxSwitch15x15 />
+									<CapMxSwitch15x15 color="#7e22ce" />
 								</Transform>
 							{/snippet}
 						</SheetObject>
@@ -226,7 +226,7 @@
 						<SheetObject key="CapRotaryEncoder1">
 							{#snippet children({ Transform })}
 								<Transform>
-									<CapRotaryEncoder />
+									<CapRotaryEncoder color="#4d7c0f" accentColor="#84cc16" />
 								</Transform>
 							{/snippet}
 						</SheetObject>
@@ -234,7 +234,7 @@
 						<SheetObject key="CapRotaryEncoder2">
 							{#snippet children({ Transform })}
 								<Transform>
-									<CapRotaryEncoder />
+									<CapRotaryEncoder color="#047857" accentColor="#10b981" />
 								</Transform>
 							{/snippet}
 						</SheetObject>

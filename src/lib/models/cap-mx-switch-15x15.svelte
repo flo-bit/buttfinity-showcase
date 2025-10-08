@@ -20,6 +20,7 @@ Command: npx @threlte/gltf@3.0.1 cap-mx-switch-15x15.glb -t -u -T --draco draco
 		children,
 		ref = $bindable(),
     interactive = $bindable(true),
+    color = '#4c0519',
 		...props
 	}: Props<THREE.Group> & {
 		ref?: THREE.Group;
@@ -27,6 +28,7 @@ Command: npx @threlte/gltf@3.0.1 cap-mx-switch-15x15.glb -t -u -T --draco draco
 		fallback?: Snippet;
 		error?: Snippet<[{ error: Error }]>;
     interactive?: boolean;
+    color?: string;
 	} = $props();
 
 	const suspend = useSuspense();
@@ -95,8 +97,8 @@ Command: npx @threlte/gltf@3.0.1 cap-mx-switch-15x15.glb -t -u -T --draco draco
 			}}
 		>
 			<T is={gltf.nodes['cap-mx-switch-15x15'].geometry} />
-			<T.MeshToonMaterial color="#550000" />
-			<Outlines color="#ff2222" width={2} angle={1} />
+			<T.MeshToonMaterial color={color} />
+			<Outlines color="white" width={2} angle={1} />
 		</T.Mesh>
 	{:catch err}
 		{@render error?.({ error: err })}

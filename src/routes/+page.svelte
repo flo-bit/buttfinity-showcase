@@ -7,7 +7,7 @@
 	import { dev } from '$app/environment';
 </script>
 
-<div class="px-8 py-16 pointer-events-none z-10">
+<div class="px-8 py-6 lg:py-16 pointer-events-none z-10">
 	<p class="mt-8 text-lg font-black text-rose-500 uppercase sm:text-xl">Buttfinity</p>
 
 	<h1 class="mt-3 text-5xl font-thin tracking-tight text-pretty text-white lowercase sm:text-7xl">
@@ -81,7 +81,7 @@
 			<dd class="pt-2 pl-9 font-light lowercase">Use as a MIDI controller.</dd>
 		</div>
 
-        <div class="lg:ml-9 absolute lg:relative bottom-2 left-2 pointer-events-auto z-20">
+        <div class="lg:ml-9 fixed lg:relative bottom-2 left-2 pointer-events-auto z-20">
 		<a
 			href="https://github.com/flo-bit/buttfinity"
 			target="_blank"
@@ -90,10 +90,12 @@
 			Build it!
 		</a>
     </div>
+
+    <div class="h-48 w-full lg:hidden"></div>
 	</dl>
 </div>
 
-<div class="absolute inset-0 h-full w-full">
+<div class="fixed inset-0 h-[100dvh] w-full">
 	<Canvas>
 		<Project config={{ state }} name="Plate A">
 			<Studio enabled={false} />

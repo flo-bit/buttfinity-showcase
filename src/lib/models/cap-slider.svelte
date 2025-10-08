@@ -18,12 +18,14 @@ Command: npx @threlte/gltf@3.0.1 cap-slider.glb -t -u -T --draco draco
 		error,
 		children,
 		ref = $bindable(),
+    color = '#0e7490',
 		...props
 	}: Props<THREE.Group> & {
 		ref?: THREE.Group;
 		children?: Snippet<[{ ref: THREE.Group }]>;
 		fallback?: Snippet;
 		error?: Snippet<[{ error: Error }]>;
+    color?: string;
 	} = $props();
 
 	const suspend = useSuspense();
@@ -176,8 +178,8 @@ Command: npx @threlte/gltf@3.0.1 cap-slider.glb -t -u -T --draco draco
       onPointerUp(evt);
     }}>
 			<T is={gltf.nodes['slider-cap'].geometry} />
-			<T.MeshToonMaterial color="#550000" />
-			<Outlines color="#ff2222" width={2} angle={1} />
+			<T.MeshToonMaterial color={color} />
+			<Outlines color="white" width={2} angle={1} />
 		</T.Mesh>
 	{:catch err}
 		{@render error?.({ error: err })}
