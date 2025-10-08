@@ -81,13 +81,15 @@
 			<dd class="pt-2 pl-9 font-light lowercase">Use as a MIDI controller.</dd>
 		</div>
 
+        <div class="lg:ml-9 absolute lg:relative bottom-2 left-2 pointer-events-auto z-20">
 		<a
 			href="https://github.com/flo-bit/buttfinity"
 			target="_blank"
-			class="ml-9 pointer-events-auto transform-all inline-flex touch-manipulation items-center justify-center gap-2 rounded-2xl border border-rose-500/15 bg-rose-200/50 px-3 py-1.5 text-sm font-medium whitespace-nowrap text-rose-950 shadow-lg inset-shadow-sm shadow-rose-500/5 inset-shadow-rose-700/5 outline-offset-2 backdrop-blur-md backdrop-brightness-105 duration-800 hover:scale-101 hover:cursor-pointer hover:bg-rose-200/60 hover:duration-300 focus-visible:scale-101 focus-visible:outline-2 focus-visible:outline-rose-500 active:scale-98 active:shadow-md active:duration-100 disabled:pointer-events-none disabled:opacity-60 disabled:shadow-md disabled:hover:scale-100 motion-safe:transition-all motion-safe:focus-visible:transition-transform dark:border-rose-500/15 dark:bg-rose-950/20 dark:text-rose-400 dark:shadow-rose-500/2 dark:inset-shadow-rose-500/2 dark:hover:bg-rose-950/25 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
+			class="pointer-events-auto transform-all inline-flex touch-manipulation items-center justify-center gap-2 rounded-2xl border border-rose-500/15 bg-rose-200/50 px-3 py-1.5 text-sm font-medium whitespace-nowrap text-rose-950 shadow-lg inset-shadow-sm shadow-rose-500/5 inset-shadow-rose-700/5 outline-offset-2 backdrop-blur-md backdrop-brightness-105 duration-800 hover:scale-101 hover:cursor-pointer hover:bg-rose-200/60 hover:duration-300 focus-visible:scale-101 focus-visible:outline-2 focus-visible:outline-rose-500 active:scale-98 active:shadow-md active:duration-100 disabled:pointer-events-none disabled:opacity-60 disabled:shadow-md disabled:hover:scale-100 motion-safe:transition-all motion-safe:focus-visible:transition-transform dark:border-rose-500/15 dark:bg-rose-950/20 dark:text-rose-400 dark:shadow-rose-500/2 dark:inset-shadow-rose-500/2 dark:hover:bg-rose-950/25 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
 		>
 			Build it!
 		</a>
+    </div>
 	</dl>
 </div>
 
