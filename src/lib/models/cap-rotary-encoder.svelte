@@ -6,22 +6,28 @@ Command: npx @threlte/gltf@3.0.1 cap-rotary-encoder.glb -t -u -T --draco draco
 <script lang="ts">
 	import type * as THREE from 'three';
 
-	import type { Snippet } from 'svelte';
-	import { T, type Props } from '@threlte/core';
-	import { useGltf, useSuspense, useDraco, Outlines } from '@threlte/extras';
+	import { onMount, type Snippet } from 'svelte';
+	import { T, useTask, useThrelte, type Props } from '@threlte/core';
+	import { useGltf, useSuspense, useDraco, Outlines, useCursor } from '@threlte/extras';
 	import { base } from '$app/paths';
+	import { spring } from '$lib/Utils';
+	import { Euler, Group, Quaternion, Vector2 } from 'three';
+
+	const { onPointerEnter, onPointerLeave } = useCursor();
 
 	let {
 		fallback,
 		error,
 		children,
 		ref = $bindable(),
+		interactive = $bindable(true),
 		...props
 	}: Props<THREE.Group> & {
 		ref?: THREE.Group;
 		children?: Snippet<[{ ref: THREE.Group }]>;
 		fallback?: Snippet;
 		error?: Snippet<[{ error: Error }]>;
+		interactive?: boolean;
 	} = $props();
 
 	const suspend = useSuspense();
@@ -38,17 +44,150 @@ Command: npx @threlte/gltf@3.0.1 cap-rotary-encoder.glb -t -u -T --draco draco
 			dracoLoader: useDraco(base + '/draco/')
 		})
 	);
+
+	const maxSpeed = 0.03;
+	const acceleration = 0.002;
+	const damping = 0.98;
+
+	let isDragging = false;
+	let previousPointerPosition = new Vector2();
+	let velocity = new Vector2();
+	let totalMove = new Vector2();
+
+	let quaternion = new Quaternion();
+
+	useTask((delta) => {
+		if (!ref) return;
+
+		velocity.multiplyScalar(damping);
+
+		let rotate = 0;
+
+		const deltaRotationQuaternion = new Quaternion().setFromEuler(
+			new Euler(velocity.y * delta * 120 * 0, (velocity.x + rotate) * delta * 120, 0, 'XYZ')
+		);
+		quaternion.multiplyQuaternions(deltaRotationQuaternion, quaternion);
+
+		ref.quaternion.copy(quaternion);
+	});
+
+	const onPointerMove = (event: PointerEvent | TouchEvent) => {
+		if (!isDragging) return;
+		event.preventDefault();
+
+		let clientX = 0,
+			clientY = 0;
+		if (window.TouchEvent && event instanceof TouchEvent) {
+			clientX = event.touches[0].clientX;
+			clientY = event.touches[0].clientY;
+		} else if (event instanceof PointerEvent) {
+			clientX = event.clientX;
+			clientY = event.clientY;
+		}
+
+		const deltaMove = new Vector2(
+			clientX - previousPointerPosition.x,
+			clientY - previousPointerPosition.y
+		);
+		totalMove.add(deltaMove);
+
+		velocity.x += deltaMove.x * acceleration;
+		velocity.y += deltaMove.y * acceleration;
+
+		// Limit the speed
+		if (velocity.length() > maxSpeed) {
+			velocity.normalize().multiplyScalar(maxSpeed);
+		}
+
+		previousPointerPosition.set(clientX, clientY);
+	};
+
+	const onPointerDown = (event: PointerEvent | TouchEvent) => {
+		isDragging = true;
+		let clientX = 0,
+			clientY = 0;
+		if (window.TouchEvent && event instanceof TouchEvent) {
+			clientX = event.touches[0].clientX;
+			clientY = event.touches[0].clientY;
+		} else if (event instanceof PointerEvent) {
+			clientX = event.clientX;
+			clientY = event.clientY;
+		}
+		previousPointerPosition.set(clientX, clientY);
+		totalMove.set(0, 0);
+
+		if (window.TouchEvent && event instanceof window.TouchEvent) {
+			event.preventDefault();
+		}
+	};
+
+	const onPointerUp = (event) => {
+		isDragging = false;
+
+		totalMove.set(0, 0);
+	};
+
+	const { renderer } = useThrelte();
+
+	onMount(() => {
+		const canvas = renderer.domElement;
+
+		canvas.addEventListener('pointermove', onPointerMove, { passive: false });
+		canvas.addEventListener('pointerup', onPointerUp, false);
+		canvas.addEventListener('touchmove', onPointerMove, { passive: false });
+		canvas.addEventListener('touchend', onPointerUp, false);
+
+		return () => {
+			canvas.removeEventListener('pointermove', onPointerMove, false);
+			canvas.removeEventListener('pointerup', onPointerUp, false);
+			canvas.removeEventListener('touchmove', onPointerMove, false);
+			canvas.removeEventListener('touchend', onPointerUp, false);
+		};
+	});
 </script>
 
-<T.Group bind:ref dispose={false} {...props}>
+<T.Group
+	bind:ref
+	dispose={false}
+	{...props}
+>
 	{#await gltf}
 		{@render fallback?.()}
 	{:then gltf}
-		<T.Mesh scale={0.1}>
+		<T.Mesh scale={0.1} 
+    onpointerdown={(evt: any) => {
+      evt.stopPropagation();
+      onPointerDown(evt);
+    }}
+    onpointerleave={() => {
+      // sizeSpring.set(1.5);
+      onPointerLeave();
+    }}
+    onpointerenter={() => {
+      // sizeSpring.set(1.6);
+      onPointerEnter();
+    }}
+    ontouchstart={(evt: any) => {
+      evt.stopPropagation();
+      onPointerDown(evt);
+    }}
+    ontouchend={(evt: any) => {
+      onPointerUp(evt);
+    }}>
 			<T is={gltf.nodes['rotary-encoder-cap'].geometry} />
 			<T.MeshToonMaterial color="#550000" />
 			<Outlines color="#ff2222" width={2} angle={1} />
+			<!-- <Edges color="white" thresholdAngle={11} scale={1.001} /> -->
 		</T.Mesh>
+
+		{#each Array(18) as _, i}
+			<T.Group rotation.y={i * ((2 * Math.PI) / 18)} position.y={1.4}>
+				<T.Mesh scale={1} position.x={0.65}>
+					<T.BoxGeometry args={[0.1, 0.5, 0.02]} />
+					<T.MeshToonMaterial color="#f43f5e" />
+				</T.Mesh>
+			</T.Group>
+		{/each}
 	{:catch err}
 		{@render error?.({ error: err })}
 	{/await}

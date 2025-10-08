@@ -19,12 +19,14 @@ Command: npx @threlte/gltf@3.0.1 cap-mx-switch-15x15.glb -t -u -T --draco draco
 		error,
 		children,
 		ref = $bindable(),
+    interactive = $bindable(true),
 		...props
 	}: Props<THREE.Group> & {
 		ref?: THREE.Group;
 		children?: Snippet<[{ ref: THREE.Group }]>;
 		fallback?: Snippet;
 		error?: Snippet<[{ error: Error }]>;
+    interactive?: boolean;
 	} = $props();
 
 	const suspend = useSuspense();
@@ -50,6 +52,7 @@ Command: npx @threlte/gltf@3.0.1 cap-mx-switch-15x15.glb -t -u -T --draco draco
 	});
 
 	function onPointerDown(evt: any) {
+    if (!interactive) return;
     evt.stopPropagation();
 		console.log('onPointerDown');
 
@@ -60,6 +63,7 @@ Command: npx @threlte/gltf@3.0.1 cap-mx-switch-15x15.glb -t -u -T --draco draco
 	}
 
 	function onPointerUp(evt: any) {
+    if (!interactive) return;
     evt.stopPropagation();
 		console.log('onPointerUp');
 
